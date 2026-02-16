@@ -39,7 +39,7 @@ SUPPLY_EVENT_TOPIC = "0x2b627736bca15cd5381dcf80b0bf11fd197d01a037c52b927a881a10
 # Canonical WETH address left-padded to 32 bytes
 WETH_TOPIC = "0x000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
 AAVE_SOUND = "/System/Library/Sounds/Hero.aiff"
-AAVE_LOOKBACK_BLOCKS = 50  # ~10 minutes at ~12s/block
+AAVE_LOOKBACK_BLOCKS = 200  # ~40 minutes at ~12s/block
 
 
 def format_token_amount(raw_value: str, token_decimal: str) -> str:
