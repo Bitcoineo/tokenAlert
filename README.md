@@ -35,7 +35,7 @@ The tool will:
 | ERC-721 NFT | Funk |
 | Aave V3 WETH Supply | Hero |
 
-Aave Supply alerts show the transaction sender (EOA) and, when different, the intermediary contract address via which the supply was routed.
+Aave Supply alerts show the transaction sender (EOA) and, when different, the intermediary contract via which the supply was routed. If the sender lookup fails, the contract user address is shown instead.
 
 ## Example output
 

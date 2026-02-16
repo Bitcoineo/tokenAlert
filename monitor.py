@@ -206,7 +206,7 @@ def decode_supply_event(log: dict, api_key: str) -> dict:
     return {
         "tx_hash": tx_hash,
         "block_number": int(log.get("blockNumber", "0x0"), 16),
-        "sender": sender or user,
+        "sender": sender,
         "user": user,
         "amount_display": amount_display,
     }
@@ -217,9 +217,12 @@ def print_supply_event(event: dict):
     print(f"\n{'=' * 60}")
     print(f"  AAVE V3 WETH SUPPLY DETECTED")
     print(f"  Amount: {event['amount_display']} WETH")
-    print(f"  Sender: {event['sender']}")
-    if event["user"].lower() != event["sender"].lower():
-        print(f"  Via:    {event['user']}")
+    if event["sender"]:
+        print(f"  Sender: {event['sender']}")
+        if event["user"].lower() != event["sender"].lower():
+            print(f"  Via:    {event['user']}")
+    else:
+        print(f"  User:   {event['user']}")
     print(f"  Tx:     {event['tx_hash']}")
     print(f"{'=' * 60}\n")
 
