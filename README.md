@@ -1,74 +1,70 @@
-# Ethereum Transfer Monitor
+# tokenAlert
 
-CLI tool that monitors an Ethereum address for incoming ETH, ERC-20 token, and ERC-721 NFT transfers. Optionally watches Aave V3 for WETH Supply events. Plays a distinct sound alert for each type.
+CLI tool that monitors any Ethereum address for incoming transfers in real time. Detects ETH, ERC-20 tokens, ERC-721 NFTs, and Aave V3 WETH supply events. Plays a distinct system sound for each type.
 
-## Setup
+**Stack:** `Python 3 · Etherscan API · python-dotenv · requests`
 
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install requests python-dotenv
-```
+---
 
-Create a `.env` file with your [Etherscan API key](https://etherscan.io/myapikey):
+## Why I built this
 
-```
-ETHERSCAN_API_KEY=your_key_here
-```
+I was manually refreshing Etherscan to watch for incoming transfers to wallets I was tracking. That gets old fast. This tool polls every 5 seconds and plays a different sound depending on what came in, so you can work on something else and know immediately what type of transfer just landed.
 
-## Usage
+## Features
 
-```bash
-python monitor.py 0xYourEthereumAddress
-python monitor.py 0xYourEthereumAddress --watch-aave
-```
+- Monitors ETH, ERC-20, and ERC-721 transfers on any address
+- Optional Aave V3 WETH supply event tracking via on-chain log filtering
+- Distinct macOS system sound per transfer type (Ping, Glass, Funk, Hero)
+- Syncs with recent activity on startup so no false alerts on launch
+- Resolves Aave supply sender through intermediary contracts whapplicable
 
-The tool will:
-1. Sync with recent activity on startup (no alerts fired)
-2. Poll every 5 seconds for new incoming transfers
-3. Print transfer details and play a sound on each detection
+## Sound Alerts
 
-| Type | Sound |
-|---|---|
-| ETH | Ping |
-| ERC-20 Token | Glass |
+| Event | Sound |
+|-------|-------|
+| ETH transfer | Ping |
+| ERC-20 token | Glass |
 | ERC-721 NFT | Funk |
 | Aave V3 WETH Supply | Hero |
 
-Aave Supply alerts show the transaction sender (EOA) and, when different, the intermediary contract via which the supply was routed. If the sender lookup fails, the contract user address is shown instead.
+## Setup
 
-## Example output
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install requests python-dotenv
 
-```
-============================================================
-  NEW ETH TRANSFER DETECTED
-  Amount: 1.5 ETH
-  From:   0x28c6c06298d514db089934071355e5743bf21d60
-  Tx:     0x7a8f...3b2e
-============================================================
+Create a .env file with your Etherscan API key:
 
-============================================================
-  NEW TOKEN TRANSFER DETECTED
-  Token:  Tether USD (USDT)
-  Amount: 5000 USDT
-  From:   0x28c6c06298d514db089934071355e5743bf21d60
-  Tx:     0x3c1d...9f4a
-============================================================
+    ETHERSCAN_API_KEY=your_key_here
 
-============================================================
-  NEW NFT TRANSFER DETECTED
-  Token:  CryptoPunks #7804
-  From:   0x1919db36ca2fa2e15f9000fd9cdc2edcf863e685
-  Tx:     0x9b2e...1c7f
-============================================================
+Get a free key at https://etherscan.io/myapikey
 
-============================================================
-  AAVE V3 WETH SUPPLY DETECTED
-  Amount: 8 WETH
-  Sender: 0x519f7709577c94999e4c7cfacb539cacb9edb7b8
-  Via:    0xd01607c3c5ecaba394d8be377a08590149325722
-  Tx:     0x08f9...117d
-============================================================
-```
+## Usage
 
-Press `Ctrl+C` to stop.
+    python monitor.py 0xYourEthereumAddress
+    python monitor.py 0xYourEthereumAddress --watch-aave
+
+Press Ctrl+C to stop.
+
+## Example Output
+
+    NEW ETH TRANSFER DETECTED
+    Amount: 1.5 ETH
+    From:   0x28c6c06298d514db089934071355e5743bf21d60
+    Tx:     0x7a8f...3b2e
+
+    NEW TOKEN TRANSFER DETECTED
+    Token:  Tether USD (USDT)
+    Amount: 5000 USDT
+    From:   0x28c6c06298d514db089934071355e5743bf21d60
+    Tx:     0x3c1d...9f4a
+
+    AAVE V3 WETH SUPPLY DETECTED
+    Amount: 8 WETH
+    Sender: 0x519f7709577c94999e4c7cfacb539cacb9edb7b8
+    Via:    0xd01607c3c5ecaba394d8be377a08590149325722
+    Tx:     0x08f9...117d
+
+## GitHub Topics
+
+`ethereum` `python` `cli` `etherscan` `erc20` `nft` `aave` `web3` `crypto` `monitoring`
